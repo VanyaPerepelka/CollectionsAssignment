@@ -4,6 +4,7 @@ package collections.entities;
 import collections.engines.LinkEngine;
 
 import java.rmi.UnexpectedException;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public final class ImplementedLinkedList<E> extends LinkEngine<E> {
@@ -238,18 +239,13 @@ public final class ImplementedLinkedList<E> extends LinkEngine<E> {
      * @param index index of object
      * */
     public void add(E object, int index) {
-       var objWithTargetIndex = first;
-       checkIndex(index);
-        int i = 0;
-        while (i != index) {
-            if (i >= numOfElements) {
-                addLast(null);
+        checkIndex(index);
+        int iteration = 0;
+        for (var i = first; i != null; i = i.next) {
+            if (iteration == index - 1){
+                i.next = new Token<E>(i.previous, object, i.next);
             }
-            objWithTargetIndex = objWithTargetIndex.next;
-            i++;
+            iteration++;
         }
-        objWithTargetIndex.previous = objWithTargetIndex;
-        objWithTargetIndex.innerData = object;
-        numOfElements++;
     }
 }

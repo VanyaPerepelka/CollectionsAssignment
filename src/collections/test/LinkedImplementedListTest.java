@@ -73,6 +73,18 @@ public class LinkedImplementedListTest implements ConsoleColors{
     }
 
     @Test
+    void pasteAtIndex(){
+        for (int i = 0; i < 4; i++) {
+            list.addLast(i);
+        }
+        System.out.println(list + " before inserting \n");
+        list.add(100, 2);
+        assertEquals("[0, 1, 100, 2, 3]", list.toString());
+        assertEquals(list.get(2), 100);
+        System.out.println(list + " after inserting \n");
+    }
+
+    @Test
     void get() {
         for (int i = 0; i < 100; i++) {
             list.addLast(i);
