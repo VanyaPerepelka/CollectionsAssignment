@@ -5,6 +5,9 @@ import org.junit.jupiter.api.*;
 
 import java.rmi.UnexpectedException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -99,6 +102,10 @@ public class LinkedImplementedListTest implements ConsoleColors{
         }
         assertEquals(100, list.size());
         Assertions.assertThrows(IndexOutOfBoundsException.class, () -> list.get(101));
+    }
+    @Test
+    void toDel(){
+        Queue<Integer> q = new LinkedList<>();
     }
     @Test
     void set() {

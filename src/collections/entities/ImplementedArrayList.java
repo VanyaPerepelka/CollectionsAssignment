@@ -24,6 +24,7 @@ public final class ImplementedArrayList<E> extends ArrayEngine<E> {
      * */
     public ImplementedArrayList(int capacity){
         DEFAULT_CAPACITY = capacity;
+        isCustomCapacity = true;
         elements = new Object[capacity];
     }
 
@@ -33,6 +34,7 @@ public final class ImplementedArrayList<E> extends ArrayEngine<E> {
      * @param element object to add
      * */
     public void add(E element){
+        catchOverFlow();
         checkLength();
         elements[numOfElements] = element;
         updateSize();
@@ -45,6 +47,7 @@ public final class ImplementedArrayList<E> extends ArrayEngine<E> {
      * @see System
      * */
     public void add(E element, int index){
+        catchOverFlow();
         checkIndexToGrow(index);
         if (index > elements.length - 1) {
             System.arraycopy(elements, index, elements, index + 1, elements.length - index);

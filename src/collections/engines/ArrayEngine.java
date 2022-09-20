@@ -22,6 +22,8 @@ public class ArrayEngine<E> {
      * */
     protected Object[] elements;
 
+    protected boolean isCustomCapacity = false;
+
     /**
      * Method to set inner array to new empty value
      * */
@@ -153,5 +155,11 @@ public class ArrayEngine<E> {
         if (numOfElements >= elements.length) {
             elements = grow();
         }
+    }
+
+    protected void catchOverFlow(){
+        if (isCustomCapacity && numOfElements == DEFAULT_CAPACITY) throw new IllegalStateException(
+                "Capacity overflow: trying to add [" + numOfElements + 1 +"] element to List with " +
+                        "[" + DEFAULT_CAPACITY + "] capacity");
     }
 }
