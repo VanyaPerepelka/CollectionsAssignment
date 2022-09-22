@@ -166,8 +166,8 @@ public class LinkEngine<E> {
      * @param object to find
      * @return true if list contains object
      * */
-    protected boolean contains(E i) {
-        return indexOf(i) >= 0;
+    protected boolean contains(E object) {
+        return indexOf(object) >= 0;
     }
 
     /**

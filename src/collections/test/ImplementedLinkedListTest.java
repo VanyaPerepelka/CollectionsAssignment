@@ -7,11 +7,10 @@ import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.LinkedBlockingDeque;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LinkedImplementedListTest implements ConsoleColors{
+public class ImplementedLinkedListTest implements ConsoleColors{
 
     ImplementedLinkedList<Integer> list;
 /*
@@ -199,11 +198,6 @@ public class LinkedImplementedListTest implements ConsoleColors{
 
         assertEquals("[0, 1, 2, 3, 4]", list.toString());
     }
+    
 
-    @Override
-    public String toString() {
-        return "ImplementedListTest{" +
-                "list=" + list +
-                '}';
-    }
 }

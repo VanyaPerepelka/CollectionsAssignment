@@ -160,5 +160,4 @@ class ImplementedListTest implements ConsoleColors{
         }
         assertEquals(arrayList.toString(), list.toString());
     }
-
 }

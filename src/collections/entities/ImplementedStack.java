@@ -1,60 +1,77 @@
 package collections.entities;
 
-import collections.engines.LinkEngine;
+import collections.engines.ArrayEngine;
 
-import java.util.NoSuchElementException;
+/**
+ * Own implementation of Stack using inner array to store objects
+ * implements and follows the Last In, First Out (LIFO) principle.
+ * It implies that the element that is inserted last comes out first.
+ * */
+public final class ImplementedStack<E> extends ArrayEngine<E> {
 
-public final class ImplementedStack<E> extends LinkEngine<E> {
     /**
-     * Simple getter for first element
-     *
-     * @return first element
-     * @throws NoSuchElementException if list is empty
-     */
-    @Override
-    public E getFirst() {
-        return super.getFirst();
+     * Default constructor with setting starting list capacity as 10
+     * */
+    public ImplementedStack() {
+        elements = new Object[capacity];
     }
 
     /**
-     * Simple getter for last element
-     *
-     * @return last element
-     * @throws NoSuchElementException if list is empty
-     */
-    @Override
-    public E getLast() {
-        return super.getLast();
+     * Constructor to create list with custom capacity
+     * */
+    public ImplementedStack(int capacity){
+        this.capacity = capacity;
+        elements = new Object[capacity];
+    }
+
+    //___________DATA_HANDLING________________//
+    /**
+     * Method to add object in the top of stack
+     * @param element object to add
+     * */
+    public void push(E element){
+        checkLength();
+        elements[numOfElements] = element;
+        updateSize();
     }
 
     /**
-     * Method to delete last element of list with unlinking it from previous element and declaring
-     * previous element as last.
-     * As result none of elements in list contains link to element to delete and GC clearing it out of stack
-     *
-     * @return Deleted element
-     * @throws NoSuchElementException if list is empty
-     */
-    @Override
-    public E deleteLast() {
-        return super.deleteLast();
+     * Method to add object to list with special index using arrayCopy to move the affected indexes over 1
+     * @param element object to add
+     * @param index special index of object
+     * @see System
+     * */
+    public void add(E element, int index){
+        checkIndexToGrow(index);
+        if (index > elements.length - 1) {
+            System.arraycopy(elements, index, elements, index + 1, elements.length - index);
+            //[a,c,d]("b", 1)->  [a,][ ][c,d]  ->  [a, ,c,d]  ->  [a,b,c,d]
+        }
+        elements[index] = element;
+        updateSize(index);
     }
 
     /**
-     * Method to add object to tail of list
-     * Example: {@code [0,1,2,3] (4)-> [0,1,2,3,4]}
-     *
-     * @param token object to add
-     * @return added object
-     */
-    @Override
-    public E addLast(E token) {
-        return super.addLast(token);
+     * Method to remove object on the top of stack
+     * */
+    public Object pop(){
+        throwIfNothingToGet();
+        var result = elements[numOfElements - 1];
+        elements[numOfElements - 1] = null;
+        numOfElements--;
+        return result;
     }
 
     /**
-     * Method to reset container to default empty value with setting all object-wrappers to null during
-     * walk through every next element
+     * Simple getter for object at the top of stack
+     * @return object on the top of stack
+     * */
+    public Object peek(){
+        throwIfNothingToGet();
+        return elements[numOfElements - 1];
+    }
+    /**
+     * Method to set inner array to new empty value
      */
     @Override
     public void clear() {
@@ -62,10 +79,21 @@ public final class ImplementedStack<E> extends LinkEngine<E> {
     }
 
     /**
-     * Search method iterating through every next element and catches equal object
+     * Method to find if object are stored in inner array using {@code IndexOf()} - another method of this object
      *
-     * @param object object to find index of
-     * @return index of handled element, -1 otherwise
+     * @param object object to find in array
+     * @return true if object is presented
+     */
+    @Override
+    public boolean contains(E object) {
+        return super.contains(object);
+    }
+
+    /**
+     * Method to check index of presented object using for-loop to walk-trough an inner array
+     *
+     * @param object object to check index of
+     * @return index of object if resented, -1 otherwise
      */
     @Override
     public int indexOf(E object) {
@@ -73,19 +101,20 @@ public final class ImplementedStack<E> extends LinkEngine<E> {
     }
 
     /**
-     * Search method to check if list contains an object using {@code indexOf(E object)}
+     * Method to return String representation of inner data using JDK default methods
+     * {@code Arrays.toString(obj[] array)} and {@code Arrays.copyOf(obj[] source)}
      *
-     * @param i@return true if list contains object
+     * @return string representation of inner array
      */
     @Override
-    public boolean contains(E i) {
-        return super.contains(i);
+    public String toString() {
+        return super.toString();
     }
 
     /**
-     * Method to check if list does not contain any objects
+     * Method to check if inner array has a data inside using 0 and service counter equality
      *
-     * @return true if list is empty
+     * @return true if array is empty
      */
     @Override
     public boolean isEmpty() {
@@ -93,45 +122,13 @@ public final class ImplementedStack<E> extends LinkEngine<E> {
     }
 
     /**
-     * Simple getter for inner counter of adding and deleting methods
+     * Method to check number of elements stored in inner array
      *
-     * @return number of elements in list
+     * @return number of elements
      */
     @Override
     public int size() {
         return super.size();
-    }
-
-    /**
-     * Method to add element to head of list
-     * Example: {@code [2,3,4,5] (1)-> [1,2,3,4,5]}
-     * @param element object to add
-     * @return object if token added
-     */
-    public E push(E element){
-        return super.addFirst(element);
-    }
-
-    /**
-     * Method to delete first element of list with unlinking it from second element and declaring
-     * second element as first.
-     * As result none of elements in list contains link to element to delete and GC clearing it out of stack
-     *
-     * @return Deleted element
-     * @throws NoSuchElementException if list is empty
-     * */
-    public E pop() {
-        return super.deleteFirst();
-    }
-
-    /**
-     * Simple getter for first element
-     *
-     * @return first element
-     * @throws NoSuchElementException if list is empty
-     * */
-    public E peek(){
-        return super.getFirst();
     }
 
 }

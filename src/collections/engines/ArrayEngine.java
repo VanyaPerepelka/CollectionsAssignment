@@ -10,7 +10,7 @@ public class ArrayEngine<E> {
     /**
      * Default size of inner array to create with the Object
      * */
-    protected int DEFAULT_CAPACITY = 10;
+    protected int capacity = 10;
 
     /**
      * Representing number of elements in inner array
@@ -22,13 +22,12 @@ public class ArrayEngine<E> {
      * */
     protected Object[] elements;
 
-    protected boolean isCustomCapacity = false;
 
     /**
      * Method to set inner array to new empty value
      * */
     protected void clear() {
-        elements = new Object[DEFAULT_CAPACITY];
+        elements = new Object[capacity];
         numOfElements = 0;
     }
 
@@ -88,7 +87,7 @@ public class ArrayEngine<E> {
      * @throws IndexOutOfBoundsException if index less than 0 or bigger than number of elements in inner array
      * */
     protected void checkIndex(int index) {
-        if (index < 0|| index > numOfElements) {
+        if (index < 0|| index >= numOfElements) {
             throw new IndexOutOfBoundsException(
                     "Index [" + index + "] out of bounds for ImplementedArrayList with " + numOfElements + " elements"
             );
@@ -120,7 +119,8 @@ public class ArrayEngine<E> {
      * */
     private Object[] grow() {
         int oldSize = elements.length;
-        return Arrays.copyOf(elements, oldSize + (oldSize / 2)); // TODO: 19.09.2022 const value
+        return Arrays.copyOf(elements,
+                (oldSize + (oldSize / 2)) + 1);//seems most optimal. +1 bc of custom capacity edge cases
     }
 
     /**
@@ -157,9 +157,13 @@ public class ArrayEngine<E> {
         }
     }
 
-    protected void catchOverFlow(){
-        if (isCustomCapacity && numOfElements == DEFAULT_CAPACITY) throw new IllegalStateException(
-                "Capacity overflow: trying to add [" + numOfElements + 1 +"] element to List with " +
-                        "[" + DEFAULT_CAPACITY + "] capacity");
+    /**
+     * Service method to throw exception
+     * @throws IllegalStateException if any of getters methods trying to return object from empty list
+     * */
+    protected void throwIfNothingToGet(){
+        if (numOfElements == 0){
+            throw new IllegalStateException("Nothing to get from empty list!");
+        }
     }
 }

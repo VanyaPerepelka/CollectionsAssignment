@@ -1,12 +1,18 @@
 package collections.entities;
 
-
 import collections.engines.LinkEngine;
 
-import java.rmi.UnexpectedException;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
-
+/**
+ * Custom implementation of LinkedList
+ * It is a data structure consisting of a collection of nodes which together represent a sequence.
+ *
+ * @see collections.engines.LinkEngine
+ * @see LinkedList
+ *
+ * @author Vinya
+ * */
 public final class ImplementedLinkedList<E> extends LinkEngine<E> {
 
     /**
@@ -209,25 +215,25 @@ public final class ImplementedLinkedList<E> extends LinkEngine<E> {
      * @throws NoSuchElementException if list does not contain proposed element
      * */
     public E delete(Object toDelete){
-        Token<E> res = null;
+        Token<E> targetToken = null;
         if (toDelete == null){
             for (var i = first; i != null; i = i.next){
                 if (i.innerData == null){
-                    res = i;
+                    targetToken = i;
                     clear(i);
                 }
             }
         } else {
             for(var i = first; i != null; i = i.next){
                 if (i.innerData.equals(toDelete)){
-                    res = i;
+                    targetToken = i;
                     clear(i);
                 }
             }
         }
-        if (res != null){
+        if (targetToken != null){
             numOfElements--;
-            return res.innerData;
+            return targetToken.innerData;
 
         } else throw new NoSuchElementException("Can't find element [" + toDelete + "] to delete it");
 

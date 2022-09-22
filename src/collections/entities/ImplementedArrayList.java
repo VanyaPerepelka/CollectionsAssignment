@@ -16,25 +16,22 @@ public final class ImplementedArrayList<E> extends ArrayEngine<E> {
      * Default constructor with setting starting list capacity as 10
      * */
     public ImplementedArrayList() {
-        elements = new Object[DEFAULT_CAPACITY];
+        elements = new Object[capacity];
     }
 
     /**
      * Constructor to create list with custom capacity
      * */
     public ImplementedArrayList(int capacity){
-        DEFAULT_CAPACITY = capacity;
-        isCustomCapacity = true;
+        this.capacity = capacity;
         elements = new Object[capacity];
     }
 
-    //___________DATA_HANDLING________________//
     /**
      * Method to add object in tail of list
      * @param element object to add
      * */
     public void add(E element){
-        catchOverFlow();
         checkLength();
         elements[numOfElements] = element;
         updateSize();
@@ -47,7 +44,6 @@ public final class ImplementedArrayList<E> extends ArrayEngine<E> {
      * @see System
      * */
     public void add(E element, int index){
-        catchOverFlow();
         checkIndexToGrow(index);
         if (index > elements.length - 1) {
             System.arraycopy(elements, index, elements, index + 1, elements.length - index);
